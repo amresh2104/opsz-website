@@ -1,14 +1,26 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useMediaQuery } from "@mui/material";
 import React from "react";
+import dynamic from "next/dynamic";
+const SplineAnimation = dynamic(() => import("../SplineAnimation"));
+import { useRouter } from "next/navigation";
 
 const HomeHero = () => {
+  const router = useRouter();
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isTab = useMediaQuery("(max-width:900px)");
+  const handleRedirect = (url) => {
+    router.push(url);
+  };
   return (
     <main
       style={{
-        background: "linear-gradient(to right, #2D0052, #7A1FA2, #1A0033)",
+        background: "linear-gradient(to bottom, #4e086d 0%, #000000 30%)",
         color: "#EFEFEF",
-        position: "relative", 
+        position: "relative",
         overflow: "hidden",
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: isMobile ? "column" : "row",
       }}
     >
       <Box
@@ -28,8 +40,8 @@ const HomeHero = () => {
             height: "500px",
             width: "60%",
             position: "absolute",
-            top: "2%", 
-            left: "0%",
+            top: isMobile ? "-10%" : "9%",
+            left: isMobile ? "14%" : "13%",
             zIndex: 0,
             borderRadius: "50%",
             filter: "blur(50px)",
@@ -38,13 +50,13 @@ const HomeHero = () => {
         <Box
           sx={{
             position: "relative",
-            zIndex: 2, 
+            zIndex: 2,
             width: "auto",
             height: "auto",
             img: {
               width: "100%",
               maxWidth: "700px",
-              marginTop: "50px",
+              marginTop: isMobile ? "unset" : "50px",
               "@media (max-width: 1200px)": { maxWidth: "600px" },
               "@media (max-width: 900px)": { maxWidth: "500px" },
               "@media (max-width: 600px)": { maxWidth: "400px" },
@@ -66,7 +78,7 @@ const HomeHero = () => {
             marginTop: "2rem",
             textAlign: "left",
             maxWidth: "700px",
-            padding: "1.5rem",
+            padding: isMobile ? "unset" : "1.5rem",
             position: "relative",
             zIndex: 2,
           }}
@@ -89,26 +101,26 @@ const HomeHero = () => {
             >
               MULTIPLIER
             </span>
-            <br />
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: "bold",
-                color: "#EFEFEF",
-                fontSize: { xs: "4rem", sm: "5rem" },
-              }}
-            >
-              FOR <span style={{ color: "#3B82F6" }}>IT</span>{" "}
-              <span style={{ color: "#9B4DFF" }}>TEAMS</span>
-            </Typography>
+          </Typography>
+
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: "bold",
+              color: "#EFEFEF",
+              fontSize: { xs: "4rem", sm: "5rem" },
+            }}
+          >
+            FOR <span style={{ color: "#3B82F6" }}>IT</span>{" "}
+            <span style={{ color: "#9B4DFF" }}>TEAMS</span>
           </Typography>
 
           <Typography
             sx={{
               color: "#D3D3D3",
               mt: 2,
-              fontSize: { xs: "0.8rem", sm: "1.1rem" },
-              maxWidth: "500px",
+              fontSize: "18px",
+              maxWidth: "571px",
             }}
           >
             OpsZ revolutionizes IT Management with intelligent agents that
@@ -119,19 +131,59 @@ const HomeHero = () => {
           <Button
             variant="contained"
             sx={{
-              background: "linear-gradient(to right, #6D28D9, #3B0A45)",
+              position: "relative",
+              zIndex: 1,
+              overflow: "hidden",
               color: "white",
               fontWeight: 550,
               borderRadius: "12px",
-              padding: "0.5rem 2rem",
+              padding: "0.9rem 2.5rem",
               textTransform: "none",
               mt: 3,
+              background: "transparent",
+              fontSize: "1rem",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                top: "-2px",
+                left: "-2px",
+                right: "-2px",
+                bottom: "-2px",
+                background:
+                  "linear-gradient(-45deg, #6D28D9, #3B0A45, #9333EA, #5B21B6)",
+                backgroundSize: "400% 400%",
+                animation: "gradientBorder 3s ease infinite",
+                zIndex: -1,
+                borderRadius: "14px",
+              },
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                top: "2px",
+                left: "2px",
+                right: "2px",
+                bottom: "2px",
+                backgroundColor: "#1E1E2F",
+                borderRadius: "10px",
+                zIndex: -1,
+              },
+              "@keyframes gradientBorder": {
+                "0%": { backgroundPosition: "0% 50%" },
+                "50%": { backgroundPosition: "100% 50%" },
+                "100%": { backgroundPosition: "0% 50%" },
+              },
             }}
+            onClick={() => handleRedirect("/chatbot")}
           >
             SCHEDULE A DEMO
           </Button>
         </Box>
       </Box>
+      {!isMobile && !isTab && (
+        <Box>
+          <SplineAnimation />
+        </Box>
+      )}
     </main>
   );
 };

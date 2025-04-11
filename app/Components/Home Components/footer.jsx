@@ -1,32 +1,5 @@
+import { legalLinks, navigationLinks } from "@/app/Utils/constants";
 import { Box, Button, Input, Link as MuiLink, Typography } from "@mui/material";
-
-const navigationLinks = [
-  { name: "Back to Top", href: "#top", ariaLabel: "Navigate to top of page" },
-  {
-    name: "The Product",
-    href: "/product",
-    ariaLabel: "Learn about our product",
-  },
-  {
-    name: "The Company",
-    href: "/company",
-    ariaLabel: "Learn about our company",
-  },
-];
-
-const legalLinks = [
-  {
-    name: "Privacy Policy",
-    href: "/privacy",
-    ariaLabel: "Read our privacy policy",
-  },
-  {
-    name: "Terms of Service",
-    href: "/terms",
-    ariaLabel: "View terms of service",
-  },
-  { name: "Cookie Policy", href: "/cookie", ariaLabel: "View cookie policy" },
-];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -47,6 +20,7 @@ const Footer = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           padding: { xs: "4rem 1.5rem", md: "2rem 2rem" },
+          objectFit: "fill",
           color: "#EFEFEF",
           position: "relative",
           "&::before": {
@@ -131,7 +105,7 @@ const Footer = () => {
             {/* Newsletter Section */}
             <Box sx={{ width: "100%", maxWidth: "450px" }}>
               <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                Inquire
+                Stay in the loop
               </Typography>
               <Box
                 component="form"
@@ -155,7 +129,6 @@ const Footer = () => {
                     px: 2,
                     fontSize: "0.9rem",
                     transition: "all 0.2s ease",
-                    "&:hover": { bgcolor: "rgba(255,255,255,0.15)" },
                   }}
                 />
                 <Button
@@ -174,7 +147,7 @@ const Footer = () => {
                     },
                   }}
                 >
-                  Subscribe
+                  Submit
                 </Button>
               </Box>
               <Typography
@@ -185,7 +158,7 @@ const Footer = () => {
                   color: "rgba(255,255,255,0.7)",
                 }}
               >
-                By Submitting you agree our <MuiLink>Privacy Policy</MuiLink>
+                By Submitting you agree our <MuiLink href="/privacy-policy">Privacy Policy</MuiLink>
               </Typography>
             </Box>
           </Box>
