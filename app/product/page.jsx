@@ -1,11 +1,10 @@
-import React from 'react'
+'use client';
+import ProductPage from "../Pages/ProductPage";
 
-const page = () => {
+export default function Product() {
   return (
     <div>
-        Product page
+      <ProductPage />
     </div>
-  )
+  );
 }
-
-export default page
