@@ -60,23 +60,29 @@ function PrevArrow(props) {
 }
 
 export default function UseCaseSection() {
-  const [isAfter, setIsAfter] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
+  const [isAfterStates, setIsAfterStates] = useState(
+    carouselItems.map(() => false)
+  );
 
-  const { ref, inView } = useInView({
+  const handleFlip = (index, toAfter) => {
+    setIsAfterStates((prev) =>
+      prev.map((state, i) => (i === index ? toAfter : state))
+    );
+  };
+
+  const { ref } = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
 
   const settings = {
     dots: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <NextArrow isAfter={isAfter} isMobile={isMobile} />,
+    nextArrow: <NextArrow isMobile={isMobile} />,
     prevArrow: <PrevArrow isMobile={isMobile} />,
   };
 
@@ -90,7 +96,6 @@ export default function UseCaseSection() {
       }}
     >
       <Box sx={{ position: "relative", width: "100%" }}>
-        {/* Background Overlay */}
         <Box
           sx={{
             position: "absolute",
@@ -104,18 +109,15 @@ export default function UseCaseSection() {
             zIndex: 0,
           }}
         />
-        {!isAfter && (
-          <Box
-            sx={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.6)",
-              zIndex: 1,
-            }}
-          />
-        )}
-
+        <Box
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            zIndex: 1,
+          }}
+        />
         <Box
           sx={{
             position: "relative",
@@ -139,270 +141,269 @@ export default function UseCaseSection() {
 
           <Box sx={{ position: "relative" }}>
             <Slider {...settings}>
-              {carouselItems.map((item, idx) => (
-                <Box
-                  key={idx}
-                  sx={{
-                    mt: 6,
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Grid
-                    container
-                    spacing={7}
-                    alignItems="stretch"
-                    maxWidth="xl"
+              {carouselItems.map((item, idx) => {
+                const isAfter = isAfterStates[idx];
+
+                return (
+                  <Box
+                    key={idx}
+                    sx={{
+                      mt: 6,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                   >
-                    {/* LEFT SIDE */}
-                    <Grid item xs={12} md={4}>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        gap={2}
-                        mb={3}
-                        justifyContent="space-between"
-                      >
-                        <Box display="flex" alignItems="center" gap={2}>
-                          <Avatar
-                            src={item.userInfo.img}
-                            alt={item.userInfo.name}
-                            sx={{ width: 64, height: 64 }}
-                          />
-                          <Box>
-                            <Typography fontWeight={600} variant="body1">
-                              {item.userInfo.name}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              sx={{ color: "rgba(255, 255, 255, 0.5)" }}
-                            >
-                              {item.userInfo.role}
-                            </Typography>
+                    <Grid container spacing={7} alignItems="stretch">
+                      <Grid item xs={12} md={4}>
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          gap={2}
+                          mb={3}
+                          justifyContent="space-between"
+                        >
+                          <Box display="flex" alignItems="center" gap={2}>
+                            <Avatar
+                              src={item.userInfo.img}
+                              alt={item.userInfo.name}
+                              sx={{ width: 64, height: 64 }}
+                            />
+                            <Box>
+                              <Typography fontWeight={600} variant="body1">
+                                {item.userInfo.name}
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                sx={{ color: "rgba(255, 255, 255, 0.5)" }}
+                              >
+                                {item.userInfo.role}
+                              </Typography>
+                            </Box>
                           </Box>
+
+                          <Divider
+                            orientation="vertical"
+                            flexItem
+                            sx={{ borderColor: "rgba(255,255,255,0.2)", mx: 2 }}
+                          />
+
+                          <img
+                            src="/SliderImage.png"
+                            alt="Initech"
+                            style={{ height: 36, objectFit: "contain" }}
+                          />
                         </Box>
 
+                        <Box mt={4}>
+                          <Typography fontWeight={600} gutterBottom>
+                            Goals:
+                          </Typography>
+                          <Typography>{item.userInfo.goals}</Typography>
+                        </Box>
+
+                        <Box mt={3}>
+                          <Typography fontWeight={600} gutterBottom>
+                            Frustrations:
+                          </Typography>
+                          <Typography color="primary.light">
+                            {item.userInfo.frustrations}
+                          </Typography>
+                        </Box>
+                      </Grid>
+
+                      <Grid
+                        item
+                        md={0.5}
+                        sx={{
+                          display: { xs: "none", md: "flex" },
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
                         <Divider
                           orientation="vertical"
-                          flexItem
-                          sx={{ borderColor: "rgba(255,255,255,0.2)", mx: 2 }}
+                          sx={{
+                            height: "100%",
+                            borderColor: "rgba(255,255,255,0.2)",
+                          }}
                         />
+                      </Grid>
 
-                        <img
-                          src="/SliderImage.png"
-                          alt="Initech"
-                          style={{ height: 36, objectFit: "contain" }}
-                        />
-                      </Box>
-
-                      <Box mt={4}>
-                        <Typography fontWeight={600} gutterBottom>
-                          Goals:
-                        </Typography>
-                        <Typography>{item.userInfo.goals}</Typography>
-                      </Box>
-
-                      <Box mt={3}>
-                        <Typography fontWeight={600} gutterBottom>
-                          Frustrations:
-                        </Typography>
-                        <Typography color="primary.light">
-                          {item.userInfo.frustrations}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                    {/* VERTICAL DIVIDER */}
-                    <Grid
-                      item
-                      md={0.5}
-                      sx={{
-                        display: { xs: "none", md: "flex" },
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Divider
-                        orientation="vertical"
-                        sx={{
-                          height: "100%",
-                          borderColor: "rgba(255,255,255,0.2)",
-                        }}
-                      />
-                    </Grid>
-                    {/* RIGHT SIDE */}
-                    <Grid item xs={12} md={7.5}>
-                      <Box
-                        key={isAfter ? "after" : "before"}
-                        className="animate__animated animate__flipInY animate__fadeIn animate__slow"
-                        sx={{ width: "100%" }}
-                      >
-                        {isAfter ? (
-                          <Card
-                            elevation={10}
-                            sx={{
-                              background: "rgba(255, 255, 255, 0.05)",
-                              border: "1px solid rgba(255,255,255,0.1)",
-                              borderRadius: 4,
-                              color: "white",
-                              p: 3,
-                              backdropFilter: "blur(12px)",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "flex-start",
-                              gap: 2.5,
-                              height: "100%",
-                            }}
-                          >
-                            <Box sx={{ flex: 1 }}>
-                              <Typography variant="h6" fontWeight={700}>
-                                {item.after_OpsZ.title}
-                              </Typography>
-                              <Divider
-                                sx={{
-                                  backgroundColor: "rgba(255,255,255,0.2)",
-                                  mb: 1,
-                                }}
-                              />
-                              <Box component="ul" sx={{ pl: 2 }}>
-                                {item.after_OpsZ.description.map((line, i) => (
-                                  <li key={i}>
-                                    <Typography
-                                      sx={{ fontSize: "0.8rem" }}
-                                      variant="body2"
-                                    >
-                                      {line}
-                                    </Typography>
-                                  </li>
-                                ))}
-                              </Box>
-                              <Box component="ul" sx={{ pl: 2, pt: 3 }}>
-                                <Typography variant="h6" fontWeight={600}>
-                                  Impact Summary
+                      <Grid item xs={12} md={7.5}>
+                        <Box
+                          key={isAfter ? "after" : "before"}
+                          className="animate__animated animate__flipInY animate__fadeIn animate__slow"
+                          sx={{ width: "100%" }}
+                        >
+                          {isAfter ? (
+                            <Card
+                              elevation={10}
+                              sx={{
+                                background:
+                                  "linear-gradient(to bottom, #4b0082 0%, #000000 100%)",
+                                border: "1px solid rgba(255,255,255,0.1)",
+                                borderRadius: 4,
+                                color: "white",
+                                p: 3,
+                                backdropFilter: "blur(12px)",
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "flex-start",
+                                gap: 2.5,
+                              }}
+                            >
+                              <Box sx={{ flex: 1 }}>
+                                <Typography variant="h6" fontWeight={700}>
+                                  {item.after_OpsZ.title}
                                 </Typography>
-                                {item.after_OpsZ.descriptionImpact.map(
-                                  (line, i) => (
-                                    <li key={i}>
-                                      <Typography
-                                        sx={{ fontSize: "0.8rem" }}
-                                        variant="body2"
-                                      >
-                                        {line}
-                                      </Typography>
-                                    </li>
-                                  )
-                                )}
+                                <Divider
+                                  sx={{
+                                    backgroundColor: "rgba(255,255,255,0.2)",
+                                    mb: 1,
+                                  }}
+                                />
+                                <Box component="ul" sx={{ pl: 2 }}>
+                                  {item.after_OpsZ.description.map(
+                                    (line, i) => (
+                                      <li key={i}>
+                                        <Typography
+                                          sx={{ fontSize: "0.8rem" }}
+                                          variant="body2"
+                                        >
+                                          {line}
+                                        </Typography>
+                                      </li>
+                                    )
+                                  )}
+                                </Box>
+                                <Box component="ul" sx={{ pl: 2, pt: 3 }}>
+                                  <Typography variant="h6" fontWeight={600}>
+                                    Impact Summary
+                                  </Typography>
+                                  {item.after_OpsZ.descriptionImpact.map(
+                                    (line, i) => (
+                                      <li key={i}>
+                                        <Typography
+                                          sx={{ fontSize: "0.8rem" }}
+                                          variant="body2"
+                                        >
+                                          {line}
+                                        </Typography>
+                                      </li>
+                                    )
+                                  )}
+                                </Box>
+                                <button
+                                  style={{
+                                    background: "#7C3AED",
+                                    color: "white",
+                                    padding: "6px 16px",
+                                    border: "none",
+                                    borderRadius: "4px",
+                                    cursor: "pointer",
+                                    fontWeight: "600",
+                                    marginTop: "16px",
+                                  }}
+                                  onClick={() => handleFlip(idx, false)}
+                                >
+                                  Before OpsZ
+                                </button>
                               </Box>
-                              <button
-                                style={{
-                                  background: "#7C3AED",
-                                  color: "white",
-                                  padding: "6px 16px",
-                                  border: "none",
-                                  borderRadius: "4px",
-                                  cursor: "pointer",
-                                  fontWeight: "600",
-                                  marginTop: "16px",
-                                }}
-                                onClick={() => setIsAfter(false)}
-                              >
-                                Before OpsZ
-                              </button>
-                            </Box>
 
-                            {!isMobile && (
-                              <Box
-                                component="img"
-                                src={item.after_OpsZ.image}
-                                alt={item.after_OpsZ.title}
-                                sx={{
-                                  width: 220,
-                                  height: 200,
-                                  objectFit: "cover",
-                                  borderRadius: 2,
-                                  border: "1px solid rgba(255,255,255,0.1)",
-                                  mt: item.title === "Before OpsZ" ? 0 : 2,
-                                }}
-                              />
-                            )}
-                          </Card>
-                        ) : (
-                          <Card
-                            elevation={10}
-                            sx={{
-                              background: "rgba(255, 255, 255, 0.05)",
-                              border: "1px solid rgba(255,255,255,0.1)",
-                              borderRadius: 4,
-                              color: "white",
-                              p: 3,
-                              backdropFilter: "blur(12px)",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "flex-start",
-                              gap: 2.5,
-                              height: "100%",
-                            }}
-                          >
-                            <Box sx={{ flex: 1 }}>
-                              <Typography variant="h6" fontWeight={700}>
-                                {item.before_OpsZ.title}
-                              </Typography>
-                              <Divider
-                                sx={{
-                                  backgroundColor: "rgba(255,255,255,0.2)",
-                                  mb: 1,
-                                }}
-                              />
-                              <Box component="ul" sx={{ pl: 2 }}>
-                                {item.before_OpsZ.description.map((line, i) => (
-                                  <li key={i}>
-                                    <Typography
-                                      sx={{ fontSize: "0.8rem" }}
-                                      variant="body2"
-                                    >
-                                      {line}
-                                    </Typography>
-                                  </li>
-                                ))}
+                              {!isMobile && (
+                                <Box
+                                  component="img"
+                                  src={item.after_OpsZ.image}
+                                  alt={item.after_OpsZ.title}
+                                  sx={{
+                                    width: 220,
+                                    height: 200,
+                                    objectFit: "cover",
+                                    borderRadius: 2,
+                                    border: "1px solid rgba(255,255,255,0.1)",
+                                  }}
+                                />
+                              )}
+                            </Card>
+                          ) : (
+                            <Card
+                              elevation={10}
+                              sx={{
+                                background: "rgba(255, 255, 255, 0.05)",
+                                border: "1px solid rgba(255,255,255,0.1)",
+                                borderRadius: 4,
+                                color: "white",
+                                p: 3,
+                                backdropFilter: "blur(12px)",
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "flex-start",
+                                gap: 2.5,
+                              }}
+                            >
+                              <Box sx={{ flex: 1 }}>
+                                <Typography variant="h6" fontWeight={700}>
+                                  {item.before_OpsZ.title}
+                                </Typography>
+                                <Divider
+                                  sx={{
+                                    backgroundColor: "rgba(255,255,255,0.2)",
+                                    mb: 1,
+                                  }}
+                                />
+                                <Box component="ul" sx={{ pl: 2 }}>
+                                  {item.before_OpsZ.description.map(
+                                    (line, i) => (
+                                      <li key={i}>
+                                        <Typography
+                                          sx={{ fontSize: "0.8rem" }}
+                                          variant="body2"
+                                        >
+                                          {line}
+                                        </Typography>
+                                      </li>
+                                    )
+                                  )}
+                                </Box>
+                                <button
+                                  style={{
+                                    background: "#7C3AED",
+                                    color: "white",
+                                    padding: "6px 16px",
+                                    border: "none",
+                                    borderRadius: "4px",
+                                    cursor: "pointer",
+                                    fontWeight: "600",
+                                    marginTop: "16px",
+                                  }}
+                                  onClick={() => handleFlip(idx, true)}
+                                >
+                                  After OpsZ
+                                </button>
                               </Box>
-                              <button
-                                style={{
-                                  background: "#7C3AED",
-                                  color: "white",
-                                  padding: "6px 16px",
-                                  border: "none",
-                                  borderRadius: "4px",
-                                  cursor: "pointer",
-                                  fontWeight: "600",
-                                  marginTop: "16px",
-                                }}
-                                onClick={() => setIsAfter(true)}
-                              >
-                                After OpsZ
-                              </button>
-                            </Box>
 
-                            {!isMobile && (
-                              <Box
-                                component="img"
-                                src={item.before_OpsZ.image}
-                                alt={item.before_OpsZ.title}
-                                sx={{
-                                  width: 240,
-                                  height: 210,
-                                  objectFit: "cover",
-                                  borderRadius: 2,
-                                  border: "1px solid rgba(255,255,255,0.1)",
-                                  mt: 0,
-                                }}
-                              />
-                            )}
-                          </Card>
-                        )}
-                      </Box>
+                              {!isMobile && (
+                                <Box
+                                  component="img"
+                                  src={item.before_OpsZ.image}
+                                  alt={item.before_OpsZ.title}
+                                  sx={{
+                                    width: 240,
+                                    height: 210,
+                                    objectFit: "cover",
+                                    borderRadius: 2,
+                                    border: "1px solid rgba(255,255,255,0.1)",
+                                  }}
+                                />
+                              )}
+                            </Card>
+                          )}
+                        </Box>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </Box>
-              ))}
+                  </Box>
+                );
+              })}
             </Slider>
           </Box>
         </Box>

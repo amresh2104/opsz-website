@@ -1,8 +1,56 @@
 import { legalLinks, navigationLinks } from "@/app/Utils/constants";
-import { Box, Button, Input, Link as MuiLink, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Input,
+  Link,
+  Link as MuiLink,
+  Typography,
+} from "@mui/material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import XIcon from "@mui/icons-material/X";
+import EmailIcon from "@mui/icons-material/Email";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+
+const iconStyle = {
+  color: "white",
+  transition: "color 0.3s",
+  "&:hover": {
+    color: "#d1a4f5",
+  },
+};
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async () => {
+    if (!email) {
+      toast.error("Please enter an email");
+      return;
+    }
+    if (!email.includes("@")) {
+      toast.error("Please enter a valid email");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post("/api/subscribe", { email });
+      if (response.status === 201) {
+        toast.success(response.data.message);
+        setEmail("");
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <footer
@@ -118,8 +166,10 @@ const Footer = () => {
               >
                 <Input
                   placeholder="Enter your email"
-                  type="email"
-                  required
+                  // type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  // required
                   aria-label="Email subscription"
                   disableUnderline
                   sx={{
@@ -134,6 +184,8 @@ const Footer = () => {
                 <Button
                   type="submit"
                   variant="contained"
+                  onClick={handleSubmit}
+                  disabled={loading}
                   sx={{
                     background: "linear-gradient(to right, #6D28D9, #3B0A45)",
                     borderRadius: "12px",
@@ -143,11 +195,15 @@ const Footer = () => {
                     whiteSpace: "nowrap",
                     transition: "transform 0.2s ease",
                     "&:hover": {
-                      transform: "translateY(-2px)",
+                      transform: loading ? "none" : "translateY(-2px)",
                     },
                   }}
                 >
-                  Submit
+                  {loading ? (
+                    <CircularProgress size={20} sx={{ color: "white" }} />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </Box>
               <Typography
@@ -158,8 +214,47 @@ const Footer = () => {
                   color: "rgba(255,255,255,0.7)",
                 }}
               >
-                By Submitting you agree our <MuiLink href="/privacy-policy">Privacy Policy</MuiLink>
+                By Submitting you agree our{" "}
+                <MuiLink href="/privacy-policy">Privacy Policy</MuiLink>
               </Typography>
+              <Box
+                sx={{
+                  mt: 3,
+                  display: "flex",
+                  gap: 3,
+                  justifyContent: "center",
+                }}
+              >
+                <Link
+                  href="https://www.linkedin.com/company/opsz/"
+                  target="_blank"
+                  rel="noopener"
+                  underline="none"
+                  sx={iconStyle}
+                >
+                  <LinkedInIcon />
+                </Link>
+
+                <Link
+                  href="https://x.com/InfoOPSZ"
+                  target="_blank"
+                  rel="noopener"
+                  underline="none"
+                  sx={iconStyle}
+                >
+                  <XIcon />
+                </Link>
+
+                <Link
+                  href="mailto:info@opsz.io"
+                  target="_blank"
+                  rel="noopener"
+                  underline="none"
+                  sx={iconStyle}
+                >
+                  <EmailIcon />
+                </Link>
+              </Box>
             </Box>
           </Box>
 

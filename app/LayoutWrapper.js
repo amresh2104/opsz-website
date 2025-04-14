@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { secureRoutes } from "./Utils/constants";
 import CookieBanner from "./Components/CookieBanner";
+import { Toaster } from "react-hot-toast";
 
 export default function LayoutWrapper({ children }) {
   const [isMounted, setIsMounted] = useState(false);
@@ -63,6 +64,7 @@ export default function LayoutWrapper({ children }) {
         pathname !== "/product" &&
         pathname !== "/company" && <NoformChatbot />}
       <CookieBanner />
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 }

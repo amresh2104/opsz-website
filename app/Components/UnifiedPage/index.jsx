@@ -268,10 +268,10 @@ const UnifiedPage = () => {
             }}
           >
             {index === 0
-              ? "Connect Everything, Control Anything"
+              ? "Connect Everything, Control Anything."
               : index === 1
-              ? "Automate Anything, Orchestrate Everything"
-              : "Amplify Growth, Simplify Control"}
+              ? "Automate Anything, Orchestrate Everything."
+              : "Amplify Growth, Simplify Control."}
           </h2>
         </Box>
         <Box
