@@ -53,12 +53,12 @@ function Navbar() {
     <AppBar
       position="fixed"
       sx={{
-        background: scrolled
+        background: scrolled || isMenuOpen
           ? "linear-gradient(to right, rgba(45, 0, 82, 0.95), rgba(122, 31, 162, 0.95), rgba(26, 0, 51, 0.95))"
           : "transparent",
-        backdropFilter: scrolled ? "blur(10px)" : "none",
+        backdropFilter: scrolled || isMenuOpen ? "blur(10px)" : "none",
         color: "#EFEFEF",
-        boxShadow: scrolled ? "0 4px 20px rgba(0,0,0,0.1)" : "none",
+        boxShadow: scrolled || isMenuOpen ? "0 4px 20px rgba(0,0,0,0.1)" : "none",
         border: "none",
         transition: "background 0.3s ease, backdropFilter 0.3s ease, boxShadow 0.3s ease",
         zIndex: 1100,
@@ -187,7 +187,7 @@ function Navbar() {
             top: "100%",
             left: 0,
             right: 0,
-            background: "rgba(45, 0, 82, 0.95)",
+            background: "rgba(45, 0, 82)",
             backdropFilter: "blur(10px)",
             padding: "1.5rem",
             transform: isMenuOpen ? "translateY(0)" : "translateY(-100%)",
