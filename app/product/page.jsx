@@ -1,9 +1,10 @@
 import React from 'react'
+import Visibility from './visibility'
 
 const page = () => {
   return (
     <div>
-        Product page
+      <Visibility/>
     </div>
   )
 }
