@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   AppBar,
   Box,
@@ -10,32 +10,11 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "../Utils/constants";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const router = useRouter();
-  const pathname = usePathname();
-
-  // Add scroll event listener to detect when user scrolls
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 80) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    
-    // Initial check in case page loads scrolled
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const handleOpenNavMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -51,17 +30,12 @@ function Navbar() {
 
   return (
     <AppBar
-      position="fixed"
+      position="sticky"
       sx={{
-        background: scrolled || isMenuOpen
-          ? "linear-gradient(to right, rgba(45, 0, 82, 0.95), rgba(122, 31, 162, 0.95), rgba(26, 0, 51, 0.95))"
-          : "transparent",
-        backdropFilter: scrolled || isMenuOpen ? "blur(10px)" : "none",
+        background: "linear-gradient(to right, #2D0052, #7A1FA2, #1A0033)",
         color: "#EFEFEF",
-        boxShadow: scrolled || isMenuOpen ? "0 4px 20px rgba(0,0,0,0.1)" : "none",
+        boxShadow: "none",
         border: "none",
-        transition: "background 0.3s ease, backdropFilter 0.3s ease, boxShadow 0.3s ease",
-        zIndex: 1100,
       }}
     >
       <Toolbar
@@ -114,25 +88,6 @@ function Navbar() {
                 "&:hover": {
                   color: "#3b82f6",
                 },
-                position: "relative",
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  bottom: -2,
-                  left: 0,
-                  width: pathname === item.url ? "100%" : "0%",
-                  height: "2px",
-                  backgroundColor: "#a855f7",
-                  transition: "width 0.3s ease",
-                  borderRadius: "2px",
-                },
-                "&:hover::after": {
-                  width: "100%",
-                },
-                opacity: scrolled ? 1 : 0.9,
-                fontWeight: pathname === item.url ? 600 : 400,
-                textDecoration: pathname === item.url ? "none" : "none",
-                padding: "4px 0",
               }}
               onClick={() => handleRedirect(item.url)}
             >
@@ -152,12 +107,6 @@ function Navbar() {
               padding: "0.5rem 1rem",
               textTransform: "none",
               cursor: "pointer",
-              boxShadow: scrolled ? "0 4px 10px rgba(0,0,0,0.2)" : "none",
-              transition: "box-shadow 0.3s ease",
-              "&:hover": {
-                background: "linear-gradient(to right, #9747FF, #003F68)",
-                boxShadow: "0 6px 15px rgba(0,0,0,0.25)",
-              },
             }}
             onClick={() => handleRedirect("/chatbot")}
           >
@@ -187,40 +136,22 @@ function Navbar() {
             top: "100%",
             left: 0,
             right: 0,
-            background: "rgba(45, 0, 82)",
-            backdropFilter: "blur(10px)",
-            padding: "1.5rem",
+            background: "linear-gradient(to right, #2D0052, #7A1FA2, #1A0033)",
+            padding: "1rem",
             transform: isMenuOpen ? "translateY(0)" : "translateY(-100%)",
             opacity: isMenuOpen ? 1 : 0,
-            transition: "transform 0.5s ease-in-out, opacity 0.5s ease-in-out",
+            transition: "transform 1s ease-in-out, opacity 1s ease-in-out",
             flexDirection: "column",
+            gap: "1.5rem",
             zIndex: 100,
-            paddingTop: "2rem",
-            paddingBottom: "2rem",
+            paddingTop: "1.5rem",
             pointerEvents: isMenuOpen ? "auto" : "none",
-            display: "flex",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
           }}
         >
           {NavLink.map((item) => (
             <Typography
               key={item.name}
-              sx={{ 
-                color: "#EFEFEF", 
-                cursor: "pointer",
-                fontWeight: pathname === item.url ? 600 : 400,
-                padding: "0.75rem 0.5rem",
-                margin: "0.25rem 0",
-                borderRadius: "4px",
-                transition: "all 0.2s ease",
-                background: pathname === item.url ? "rgba(168, 85, 247, 0.2)" : "transparent",
-                borderLeft: pathname === item.url ? "3px solid #a855f7" : "3px solid transparent",
-                "&:hover": {
-                  background: "rgba(168, 85, 247, 0.1)",
-                  paddingLeft: "0.75rem",
-                },
-                fontSize: "16px",
-              }}
+              sx={{ color: "#EFEFEF", cursor: "pointer" }}
               onClick={() => handleCloseNavMenu(item.url)}
             >
               {item.name}
@@ -231,18 +162,13 @@ function Navbar() {
             variant="contained"
             sx={{
               background: "linear-gradient(to right, #a855f7, #003F68)",
-              color: "#FFFFFF",
+              color: "#D3D3D3",
               fontWeight: 550,
               borderRadius: "7px",
-              padding: "0.75rem 1rem",
+              padding: "0.5rem 1rem",
               textTransform: "none",
-              marginTop: "2rem",
+              marginTop: "1.5rem",
               cursor: "pointer",
-              boxShadow: "0 4px 15px rgba(0,0,0,0.15)",
-              "&:hover": {
-                background: "linear-gradient(to right, #9747FF, #003F68)",
-                boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
-              },
             }}
             onClick={() => handleCloseNavMenu("/chatbot")}
           >
