@@ -48,6 +48,7 @@ const ProductSaving = () => {
             objectPosition: "center",
             zIndex: 0,
             transform: "scaleX(-1)",
+            filter: isMobile ? "brightness(0.4)" : "brightness(0.9)",
           }}
         />
         <Box

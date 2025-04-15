@@ -9,7 +9,8 @@ const HomeHero = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
   const isTab = useMediaQuery("(max-width:900px)");
   const handleRedirect = (url) => {
-    router.push(url);
+    // router.push(url);
+    window.location.href = url;
   };
   return (
     <main
@@ -57,9 +58,14 @@ const HomeHero = () => {
               width: "100%",
               maxWidth: "700px",
               marginTop: isMobile ? "unset" : "50px",
+              transition: "transform 0.4s ease-in-out",
+              borderRadius: "12px",
               "@media (max-width: 1200px)": { maxWidth: "600px" },
               "@media (max-width: 900px)": { maxWidth: "500px" },
               "@media (max-width: 600px)": { maxWidth: "400px" },
+              "&:hover": {
+                transform: "scale(1.05)",
+              },
             },
           }}
         >
@@ -73,6 +79,7 @@ const HomeHero = () => {
             }}
           />
         </Box>
+
         <Box
           sx={{
             marginTop: "2rem",
@@ -142,6 +149,7 @@ const HomeHero = () => {
               mt: 3,
               background: "transparent",
               fontSize: "1rem",
+              transition: "all 0.3s ease",
               "&::before": {
                 content: '""',
                 position: "absolute",
@@ -166,6 +174,14 @@ const HomeHero = () => {
                 backgroundColor: "#1E1E2F",
                 borderRadius: "10px",
                 zIndex: -1,
+                transition: "all 0.3s ease",
+              },
+              "&:hover": {
+                transform: "scale(1.03)",
+                "&::after": {
+                  background:
+                    "radial-gradient(circle at center, #6D28D9, #3B0A45)",
+                },
               },
               "@keyframes gradientBorder": {
                 "0%": { backgroundPosition: "0% 50%" },
