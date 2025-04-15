@@ -68,7 +68,7 @@ function Navbar() {
           }}
           onClick={() => handleRedirect("/")}
         >
-          <img src="/NavLogo.svg" alt="nav-logo" />
+          <img src="/NavLogo.svg" alt="nav-logo" fetchPriority="high" />
         </Box>
 
         <Box
