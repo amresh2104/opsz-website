@@ -2,6 +2,7 @@ import { Box, Typography, Container, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
+// Updated animations to have elements come from their respective sides
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
@@ -23,20 +24,20 @@ const staggerContainer = {
 };
 
 const fadeInFromLeft = {
-  hidden: { opacity: 0, x: -30 },
+  hidden: { opacity: 0, x: -200 }, 
   visible: { 
     opacity: 1, 
     x: 0,
-    transition: { duration: 0.7, ease: "easeOut" }
+    transition: { duration: 1.2, ease: "easeOut" }
   }
 };
 
 const fadeInFromRight = {
-  hidden: { opacity: 0, x: 30 },
+  hidden: { opacity: 0, x: 200 },
   visible: { 
     opacity: 1, 
     x: 0,
-    transition: { duration: 0.7, ease: "easeOut" }
+    transition: { duration: 1.2, ease: "easeOut" }
   }
 };
 
@@ -149,6 +150,7 @@ const ProductHero = () => {
                 mb: { xs: '2rem', md: 0 },
                 mt: { xs: 0, md: 0 },
                 pl: { xs: '0', md: '0' },
+                overflow: 'hidden', // Add this to ensure animation doesn't spill outside
               }}
             >
               <MotionBox
@@ -318,10 +320,11 @@ const ProductHero = () => {
             width: '100%',
             minHeight: { xs: 'auto' },
             zIndex: 2,
-            mt: { xs: '0', md: '3rem' },
+            mt: { xs: '0', sm: '2rem', md: '3rem' },
             px: { xs: 1, md: 2 },
           }}
         >
+          {/* Background overlay */}
           <Box
             sx={{
               position: 'absolute',
@@ -348,13 +351,14 @@ const ProductHero = () => {
             <Box
               sx={{
                 width: '100%',
-                maxWidth: { xs: '98%', sm: '98%', md: '1400px' },
+                maxWidth: { xs: '98%', sm: '95%', md: '1400px' },
                 margin: '0 auto',
                 display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                alignItems: { xs: 'center', md: 'center' },
-                justifyContent: 'space-between',
-                gap: { xs: '2rem', md: '2.5rem' },
+                // Key fix: keep row layout for tablets but adjust width distribution
+                flexDirection: { xs: 'column', sm: 'row', md: 'row' },
+                alignItems: 'center',
+                justifyContent: 'center', // Center content horizontally
+                gap: { xs: '2rem', sm: '1rem', md: '2.5rem' },
               }}
             >
               <MotionBox
@@ -363,8 +367,8 @@ const ProductHero = () => {
                   width: { xs: 'unset', md: 'calc(50% - 1.5rem)' },
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: { xs: 'flex-start', md: 'flex-start' },
-                  textAlign: { xs: 'left', md: 'left' },
+                  alignItems: { xs: 'flex-start', sm: 'flex-start', md: 'flex-start' },
+                  textAlign: { xs: 'left', sm: 'left', md: 'left' },
                   px: { xs: '0.25rem', md: '0.5rem' },
                 }}
               >
@@ -377,7 +381,6 @@ const ProductHero = () => {
                     fontSize: '16px',
                     fontWeight: 600,
                     marginBottom: '0.5rem',
-                    textAlign: { xs: 'center', md: 'left' },
                     width: '100%',
                   }}
                 >
@@ -394,6 +397,7 @@ const ProductHero = () => {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     fontFamily: 'Montserrat',
+                    // Adjust font size for better tablet view
                     fontSize: { xs: '28px', sm: '36px', md: '46px', lg: '58px' },
                     fontWeight: 700,
                     lineHeight: 1.2,
@@ -401,7 +405,6 @@ const ProductHero = () => {
                     overflowWrap: 'break-word',
                     wordWrap: 'break-word',
                     hyphens: 'auto',
-                    textAlign: { xs: 'center', md: 'left' },
                     width: '100%',
                     maxWidth: '100%',
                   }}
@@ -420,7 +423,6 @@ const ProductHero = () => {
                     lineHeight: 1.2,
                     marginBottom: '1.5rem',
                     overflowWrap: 'break-word',
-                    textAlign: { xs: 'center', md: 'left' },
                     width: '100%',
                   }}
                 >
@@ -436,8 +438,6 @@ const ProductHero = () => {
                     fontSize: { xs: '14px', sm: '15px', md: '16px', lg: '18px' },
                     lineHeight: 1.5,
                     marginBottom: '1.5rem',
-                    maxWidth: '100%',
-                    textAlign: { xs: 'left', md: 'left' },
                     pr: { xs: 0, md: '0.5rem' },
                   }}
                 >
@@ -514,11 +514,13 @@ const ProductHero = () => {
               <MotionBox
                 variants={fadeInFromRight}
                 sx={{
-                  width: { xs: '100%', md: 'calc(50% - 1.5rem)' },
+                  // Key fix: adjust width for tablet
+                  width: { xs: '100%', sm: '45%', md: 'calc(50% - 1.5rem)' },
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                   px: { xs: '0', md: '0.25rem' },
+                  overflow: 'hidden',
                 }}
                 whileHover={{ 
                   scale: 1.03, 
@@ -530,8 +532,9 @@ const ProductHero = () => {
                   src="/product-page/Placeholder Image.svg"
                   alt="Seamless Orchestration"
                   sx={{
+                    width: '100%', // Set width to 100% of container
                     maxWidth: '100%',
-                    maxHeight: { xs: '260px', sm: '300px', md: '400px', lg: '500px' },
+                    maxHeight: { xs: '260px', sm: '350px', md: '400px', lg: '500px' },
                     objectFit: 'contain',
                     filter: 'drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))',
                   }}
