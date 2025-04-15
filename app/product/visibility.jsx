@@ -22,7 +22,7 @@ const Visibility = () => {
         px: { xs: 2, md: 6 },
         py: { xs: 4, md: 8 },
         gap: { xs: 4, md: 8 },
-        minHeight: '90vh',
+        // minHeight: '90vh',
         color: 'white',
         fontFamily: `'Inter', sans-serif`,
       }}
@@ -64,7 +64,7 @@ const Visibility = () => {
           viewport={{ once: true }}
         >
           <Typography
-            variant={isMobile ? 'h4' : 'h2'}
+            variant={isMobile ? 'h4' : 'h1'}
             sx={{
               background: 'linear-gradient(to right, #ffffff, #7A1FA1, #1A0033)',
               WebkitBackgroundClip: 'text',
@@ -76,10 +76,10 @@ const Visibility = () => {
             Visibility
           </Typography>
            <Typography
-            variant="h6"
+            variant="h5"
             sx={{
-              fontWeight: 500,
-              color: '#eee',
+              fontWeight: 600,
+              color: '#9BA5B7',
               fontFamily: `'Inter', sans-serif`,
               mb: 2,
             }}
@@ -96,8 +96,8 @@ const Visibility = () => {
           transition={{ duration: 0.7, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <Typography sx={{ color: '#ccc', fontSize: '1rem' }}>
-            OpsZ’s flexible design lets enterprises unify current automation tools
+          <Typography sx={{ color: '#9BA5B7', fontSize: '1rem', maxWidth: '50%' }}>
+            <span style={{ color: 'white' }}>OpsZ’s </span>flexible design lets enterprises unify current automation tools
             within one platform, enhancing efficiency without disrupting operations.
           </Typography>
         </motion.div>
@@ -110,10 +110,10 @@ const Visibility = () => {
         >
           <Card
             sx={{
-              bgcolor: '#1a1a1a',
+              bgcolor: 'rgba(255, 255, 255, 0.1)',
               p: 2,
               mt: 2,
-              color: '#fff',
+              color: '#9BA5B7',
               fontFamily: `'Inter', sans-serif`,
               boxShadow: '0px 0px 12px rgba(255, 255, 255, 0.05)',
               borderRadius: '8px',

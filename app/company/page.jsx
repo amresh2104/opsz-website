@@ -1,38 +1,11 @@
 'use client';
 import React from 'react';
-import { Box, Typography, Container, Grid, Avatar, Button } from '@mui/material';
 
 const CompanyPage = () => {
-  const teamMembers = [
-    {
-      name: "Sarah Johnson",
-      position: "Chief Executive Officer",
-      bio: "With over 15 years in IT operations, Sarah leads OpsZ with vision and expertise.",
-      image: "/team/avatar1.jpg"
-    },
-    {
-      name: "Michael Chen",
-      position: "Chief Technology Officer",
-      bio: "Michael brings 12+ years of experience in ML and AI systems architecture.",
-      image: "/team/avatar2.jpg"
-    },
-    {
-      name: "Elena Rodriguez",
-      position: "VP of Engineering",
-      bio: "Elena specializes in scalable enterprise systems with a focus on reliability.",
-      image: "/team/avatar3.jpg"
-    },
-    {
-      name: "David Kim",
-      position: "Product Director",
-      bio: "David has helped transform IT operations at Fortune 500 companies.",
-      image: "/team/avatar4.jpg"
-    }
-  ];
 
   return (
     <>
-      <Box
+      {/* <Box
         sx={{
           position: 'relative',
           minHeight: '80vh',
@@ -954,7 +927,8 @@ const CompanyPage = () => {
             </Button>
           </Box>
         </Container>
-      </Box>
+      </Box> */}
+      <h1>Comming Soon...</h1>
     </>
   );
 };
