@@ -198,7 +198,7 @@ const HomeProduct = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: { xs: 'center', md: 'flex-start' },
-                textAlign: { xs: 'center', md: 'left' },
+                textAlign: { xs: 'left', md: 'left' },
                 height: { xs: 'auto', md: '100%' },
                 p: 0,
               }}
@@ -297,7 +297,7 @@ const HomeProduct = () => {
                     fontFamily: 'Montserrat',
                     fontSize: { xs: '13px', sm: '15px', md: '16px', lg: '18px' },
                     lineHeight: 1.5,
-                    textAlign: { xs: 'center', md: 'left' },
+                    textAlign: { xs: 'left', md: 'left' },
                   }}
                 >
                   Discover how our platform redefines IT operations through advanced real-time insights and seamless integration. Experience unparalleled efficiency and adaptability in managing your infrastructure.

@@ -339,8 +339,8 @@ const UnifiedPage = () => {
                   src={btn.icon}
                   alt={`${btn.label} Icon`}
                   sx={{
-                    width: { xs: 18, md: 20 },
-                    height: { xs: 18, md: 20 },
+                    width: { xs: 20, md: 20 },
+                    height: { xs: 20, md: 20 },
                     marginRight: { xs: 2, md: 3 },
                     border: `1px solid ${isActive ? btn.color : "#545F71"}`,
                     borderRadius: "1px",

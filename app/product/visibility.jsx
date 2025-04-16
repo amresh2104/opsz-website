@@ -34,7 +34,7 @@ const Visibility = () => {
           flexDirection: "column",
           justifyContent: "center",
           gap: 2,
-          textAlign: { xs: "center", md: "left" },
+          textAlign: { xs: "left", md: "left" },
         }}
       >
         <motion.div
