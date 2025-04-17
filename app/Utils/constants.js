@@ -251,4 +251,5 @@ export const secureRoutes = [
   "/privacy-policy",
   "/terms-condition",
   "/cookie-policy",
+  "/schedule-demo",
 ];
